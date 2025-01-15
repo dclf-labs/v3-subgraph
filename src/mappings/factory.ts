@@ -40,6 +40,9 @@ export function handlePoolCreated(event: PoolCreated): void {
   factory.poolCount = factory.poolCount.plus(ONE_BI)
 
   let pool = new Pool(event.params.pool.toHexString()) as Pool
+  if (event.params.pool.toHexString() != "0x526CD4f72F2CC54d6A02A7feFC84753A826A5737".toLowerCase()) {
+    return
+  }
   let token0 = Token.load(event.params.token0.toHexString())
   let token1 = Token.load(event.params.token1.toHexString())
 

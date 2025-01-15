@@ -25,6 +25,9 @@ import { createTick, feeTierToTickSpacing } from '../utils/tick'
 export function handleInitialize(event: Initialize): void {
   // update pool sqrt price and tick
   let pool = Pool.load(event.address.toHexString())!
+  if (event.address.toHexString() != "0x526CD4f72F2CC54d6A02A7feFC84753A826A5737".toLowerCase()) {
+    return
+  }
   pool.sqrtPrice = event.params.sqrtPriceX96
   pool.tick = BigInt.fromI32(event.params.tick)
   pool.save()
@@ -54,6 +57,9 @@ export function handleMint(event: MintEvent): void {
   let bundle = Bundle.load('1')!
   let poolAddress = event.address.toHexString()
   let pool = Pool.load(poolAddress)!
+  if (!pool) {
+    return
+  }
   let factory = Factory.load(FACTORY_ADDRESS)!
 
   let token0 = Token.load(pool.token0)
