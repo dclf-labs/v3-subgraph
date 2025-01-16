@@ -9,7 +9,7 @@ import {
 import { Bundle, Position, PositionSnapshot, Token } from '../types/schema'
 import { ADDRESS_ZERO, factoryContract, ZERO_BD, ZERO_BI } from '../utils/constants'
 import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
-import { convertTokenToDecimal, loadTransaction } from '../utils'
+import { convertTokenToDecimal, loadTransaction, isPoolAllowed } from '../utils'
 
 function getPosition(event: ethereum.Event, tokenId: BigInt): Position | null {
   let position = Position.load(tokenId.toString())
@@ -24,6 +24,10 @@ function getPosition(event: ethereum.Event, tokenId: BigInt): Position | null {
     if (!positionCall.reverted) {
       let positionResult = positionCall.value
       let poolAddress = factoryContract.getPool(positionResult.value2, positionResult.value3, positionResult.value4)
+
+      if (!isPoolAllowed(poolAddress.toHexString())) {
+        return null
+      }
 
       position = new Position(tokenId.toString())
       // The owner gets correctly updated in the Transfer handler
@@ -92,8 +96,7 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
     return
   }
 
-  // temp fix
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
+  if (!isPoolAllowed(position.pool)) {
     return
   }
 
@@ -129,8 +132,7 @@ export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
     return
   }
 
-  // temp fix
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
+  if (!isPoolAllowed(position.pool)) {
     return
   }
 
@@ -157,7 +159,8 @@ export function handleCollect(event: Collect): void {
   if (position == null) {
     return
   }
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
+  
+  if (!isPoolAllowed(position.pool)) {
     return
   }
 
@@ -179,6 +182,10 @@ export function handleTransfer(event: Transfer): void {
 
   // position was not able to be fetched
   if (position == null) {
+    return
+  }
+
+  if (!isPoolAllowed(position.pool)) {
     return
   }
 
