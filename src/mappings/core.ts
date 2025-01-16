@@ -9,7 +9,7 @@ import {
   Mint as MintEvent,
   Swap as SwapEvent
 } from '../types/templates/Pool/Pool'
-import { convertTokenToDecimal, loadTransaction, safeDiv } from '../utils'
+import { convertTokenToDecimal, loadTransaction, safeDiv, isPoolAllowed } from '../utils'
 import { FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI } from '../utils/constants'
 import { findEthPerToken, getEthPriceInUSD, getTrackedAmountUSD, sqrtPriceX96ToTokenPrices } from '../utils/pricing'
 import {
@@ -25,7 +25,7 @@ import { createTick, feeTierToTickSpacing } from '../utils/tick'
 export function handleInitialize(event: Initialize): void {
   // update pool sqrt price and tick
   let pool = Pool.load(event.address.toHexString())!
-  if (event.address.toHexString() != "0x526CD4f72F2CC54d6A02A7feFC84753A826A5737".toLowerCase()) {
+  if (!isPoolAllowed(event.address.toHexString())) {
     return
   }
   pool.sqrtPrice = event.params.sqrtPriceX96
@@ -289,7 +289,7 @@ export function handleSwap(event: SwapEvent): void {
   let pool = Pool.load(event.address.toHexString())!
 
   // hot fix for bad pricing
-  if (pool.id == '0x9663f2ca0454accad3e094448ea6f77443880454') {
+  if (!isPoolAllowed(event.address.toHexString())) {
     return
   }
 

@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { BigInt, BigDecimal, ethereum } from '@graphprotocol/graph-ts'
 import { Transaction } from '../types/schema'
-import { ONE_BI, ZERO_BI, ZERO_BD, ONE_BD } from '../utils/constants'
+import { ONE_BI, ZERO_BI, ZERO_BD, ONE_BD, ALLOWED_POOL_ADDRESSES } from '../utils/constants'
 
 export function exponentToBigDecimal(decimals: BigInt): BigDecimal {
   let bd = BigDecimal.fromString('1')
@@ -91,4 +91,7 @@ export function loadTransaction(event: ethereum.Event): Transaction {
   transaction.gasPrice = event.transaction.gasPrice
   transaction.save()
   return transaction as Transaction
+}
+export function isPoolAllowed(address: string): boolean {
+  return ALLOWED_POOL_ADDRESSES.includes(address.toLowerCase())
 }
