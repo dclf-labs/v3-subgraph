@@ -129,7 +129,7 @@ export function handlePoolCreatedHelper(
 
   pool.token0 = token0.id
   pool.token1 = token1.id
-  pool.feeTier = BigInt.fromI32(event.params.fee)
+  pool.feeTier = BigInt.fromI32(event.params.tickSpacing)
   pool.createdAtTimestamp = event.block.timestamp
   pool.createdAtBlockNumber = event.block.number
   pool.liquidityProviderCount = ZERO_BI
