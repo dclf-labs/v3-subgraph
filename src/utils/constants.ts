@@ -3,9 +3,9 @@ import { BigInt, BigDecimal, Address } from '@graphprotocol/graph-ts'
 import { Factory as FactoryContract } from '../types/templates/Pool/Factory'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
+export const FACTORY_ADDRESS = '0x9D63d318143cF14FF05f8AAA7491904A494e6f13'
 export const ALLOWED_POOL_ADDRESSES = [
-    '0x526cd4f72f2cc54d6a02a7fefc84753a826a5737'
+    '0x12bf23c2fe929c23ab375199efad425e70c0ece1'  
   ].map<string>(a => a.toLowerCase())
   
 export let ZERO_BI = BigInt.fromI32(0)
