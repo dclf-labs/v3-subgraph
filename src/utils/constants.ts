@@ -5,7 +5,7 @@ import { Factory as FactoryContract } from '../types/templates/Pool/Factory'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 export const FACTORY_ADDRESS = '0x9D63d318143cF14FF05f8AAA7491904A494e6f13'
 export const ALLOWED_POOL_ADDRESSES = [
-    '0x12bf23c2fe929c23ab375199efad425e70c0ece1'  
+    '0x12bf23c2fe929c23ab375199efad425e70c0ece1','0xe6ed575d9627942893f12bf9c2cc3c47cd11d002'
   ].map<string>(a => a.toLowerCase())
   
 export let ZERO_BI = BigInt.fromI32(0)
