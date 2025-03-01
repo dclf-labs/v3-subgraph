@@ -12,7 +12,7 @@ dataSources:
     source:
       address: '0x0f6e27007e257e74c86522387BD071D561ba3C97'
       abi: Factory
-      startBlock: 3311928
+      startBlock: 3129726 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -39,9 +39,9 @@ dataSources:
     name: NonfungiblePositionManager
     network: sophon
     source:
-      address: '0xc0295F7792B69eAb81d71DD3b82Be0e906413096'
+      address: '0x55a853462862d54ef6fce380ce83dfd60494cf7a'
       abi: NonfungiblePositionManager
-      startBlock: 3311928
+      startBlock: 3129726
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
